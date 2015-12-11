@@ -7,6 +7,8 @@
 # script was intended for billing purposes based on GB of backup storage.
 #
 # Martijn Smit <martijn@lostdomain.org>
+#
+# v1.0 - 11-12-2015: Initial release
 
 if ((Get-PSSnapin -Name VeeamPSSnapIn -ErrorAction SilentlyContinue) -eq $null) {
     Add-PsSnapin -Name VeeamPSSnapIn
