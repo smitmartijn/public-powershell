@@ -6,6 +6,8 @@
 # There is more information in the backup job object for you to use, but this
 # script was intended for billing purposes based on GB of backup storage.
 #
+# Tested and working on Veeam B&R 8. Might not work with Veeam B&R 9.
+#
 # Martijn Smit <martijn@lostdomain.org>
 #
 # v1.0 - 11-12-2015: Initial release
