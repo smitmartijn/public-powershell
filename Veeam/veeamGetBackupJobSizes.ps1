@@ -6,6 +6,8 @@
 # There is more information in the backup job object for you to use, but this
 # script was intended for billing purposes based on GB of backup storage.
 #
+# Tested and working on Veeam B&R 8. Might not work with Veeam B&R 9.
+#
 # Martijn Smit <martijn@lostdomain.org>
 #
 # v1.0 - 11-12-2015: Initial release
@@ -14,14 +16,22 @@ if ((Get-PSSnapin -Name VeeamPSSnapIn -ErrorAction SilentlyContinue) -eq $null) 
     Add-PsSnapin -Name VeeamPSSnapIn
 }
 
+$global:newBackupData = @();
+
 function getBackupInfo()
 {
+	$VeeamVersion = ((Get-PSSnapin VeeamPSSnapin).Version.Major);
 	$backupJobs = Get-VBRBackup
 
 	foreach ($job in $backupJobs)
 	{
-		# get all restore points inside this backup job
-		$restorePoints = $job.GetStorages() | sort CreationTime -descending
+		# get all restore points inside this backup job - use different function for Veeam B&R 9+
+		if($VeeamVersion -ge 9) {
+			$restorePoints = $job.GetAllStorages() | sort CreationTime -descending
+		}
+		else {
+			$restorePoints = $job.GetStorages() | sort CreationTime -descending
+		}
 
 		$jobBackupSize = 0;
 		$jobDataSize = 0;
@@ -60,7 +70,12 @@ function getBackupInfo()
 		$jobDataSize = [math]::Round(($jobDataSize / 1024 / 1024 / 1024), 2);
 
 		# format record into an array and save it into the global data array
-		$newEntry = @{Job=$jobName; VMs=$vms; AmountVMs=$amountVMs; jobBackupSize=$jobBackupSize; jobDataSize=$jobDataSize}
+		$newEntry = New-Object -TypeName PSObject
+        	$newEntry | Add-Member -Name 'Job' -Membertype NoteProperty -Value $jobName
+		$newEntry | Add-Member -Name 'VMs' -MemberType Noteproperty -Value $vms
+        	$newEntry | Add-Member -Name 'jobBackupSize' -MemberType Noteproperty -Value $jobBackupSize
+        	$newEntry | Add-Member -Name 'jobDataSize' -MemberType Noteproperty -Value $jobDataSize
+        	$newEntry | Add-Member -Name 'amountVMs' -MemberType Noteproperty -Value $amountVMs
 		$global:newBackupData += $newEntry;
 
 		# now do something with these stats! :-)
