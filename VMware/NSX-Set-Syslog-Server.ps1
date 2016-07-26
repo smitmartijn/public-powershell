@@ -111,7 +111,7 @@ foreach ($edge in $result_xml.pagedEdgeList.edgePage.edgeSummary)
 	# Convert XML id to string for use in API URL
 	[string]$edge_id = $edge.id
 	# Set syslog server on NSX Edge
-	$result = Http-Web-Request "GET" "application/xml" "https://$NSX_Manager_IP" "/api/4.0/edges/$edge_id/syslog/config" $headers "" #$requestBody
+	$result = Http-Web-Request "PUT" "application/xml" "https://$NSX_Manager_IP" "/api/4.0/edges/$edge_id/syslog/config" $headers $requestBody
 }
 
 # Set syslog server on NSX Controllers
