@@ -265,7 +265,7 @@ $OvfConfiguration.Common.Web_Proxy_IP.value = $Web_Proxy_IP
 $OvfConfiguration.Common.Web_Proxy_Port.value = $Web_Proxy_Port
 $OvfConfiguration.Common.Rsyslog_IP.value = $Syslog
 
-$OvfConfiguration.NetworkMapping.Vlan256_corp_2.value = (Get-VirtualPortGroup -Name $TargetPortGroup)
+$OvfConfiguration.NetworkMapping.Vlan256_corp_2.value = (Get-VDPortgroup -Name $TargetPortGroup)
 
 if($Log_Push.IsPresent) { $OvfConfiguration.Common.Log_Push.value = $True }
 else { $OvfConfiguration.Common.Log_Push.value = $False }
