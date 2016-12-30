@@ -1,0 +1,4 @@
+DatasourceType,IP,Username,Password,Nickname,NSX_VC_URL,NSX_Controller_PW
+VCENTER,vcenter.lab,networkinsight@vsphere.local,MyPassword,vcenter.lab,onlyusedforNSX,onlyusedforNSX
+NSX,nsx.lab,admin,MyPassword,nsx.lab,vcenter.lab,MyControllerPassword
+CISCON1K,192.168.0.1,admin,MyPassword,VSM-1,onlyusedforNSX,onlyusedforNSX
