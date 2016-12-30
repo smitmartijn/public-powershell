@@ -37,3 +37,15 @@ This is the type of data source you're adding to Network Insight. NI uses codes 
 
 #### Rest of the columns
 The rest of the columns are pretty straightforward, all relating to the data source itself (so IP of the switch/vcenter/panorama/etc/etc and credentials to login) except for the last 2. Those will only be used when adding a NSX Manager (*NSX*), where *NSX_VC_URL* is the hostname of the vCenter which is linked to this NSX Manager and *NSX_Controller_PW* is the password of the NSX Controllers present in the NSX environment.
+
+### How to run
+
+The script has a few parameters which are pretty straightforward. Here's an example of how to run it:
+
+```powershell
+PowerCLI > .\Network-Insight-Bulk-Add-Datasources.ps1 -NI_IP network-insight.lab -NI_Username 'admin@local' -NI_Password admin -DatasourcesCSV .\network-insight-data-sources.csv
+[12/30/2016 16:32:50] Logged into Network Insight!
+[12/30/2016 16:32:50] Added Data Source: VCENTER with IP vcenter.lab.lostdomain.local
+[12/30/2016 16:32:50] Added Data Source: NSX with IP manager.nsx.lab.lostdomain.local
+[12/30/2016 16:32:50] Added Data Source: CISCON1K with IP 10.8.25.15
+```
